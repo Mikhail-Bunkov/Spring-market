@@ -3,6 +3,7 @@ package ru.geekbrains.summer.market.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.summer.market.dto.OrderDto;
+import ru.geekbrains.summer.market.exceptions.EmptyValueException;
 import ru.geekbrains.summer.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.summer.market.model.User;
 import ru.geekbrains.summer.market.services.OrderService;
@@ -21,7 +22,10 @@ public class OrderController {
 
     @PostMapping
     public void createOrder(Principal principal, @RequestParam String address, @RequestParam String phone) {
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to create order. User not found"));;
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to create order. User not found"));
+        if(address.isEmpty()||phone.isEmpty()){
+            throw new EmptyValueException("Заполните все поля");//Я мастер придумывать имена классам xD (нет)
+        }
         orderService.createOrder(user, address, phone);
     }
 
