@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<?> catchResourceNotFoundException(EmptyValueException e) {
-        return new ResponseEntity<>(new MarketError(e.getMessage()), HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> catchResourceNotFoundException(InvalidAttributeValueException e) {
+        return new ResponseEntity<>(new MarketError(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
