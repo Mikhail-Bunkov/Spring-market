@@ -18,11 +18,22 @@
             <td>{{o.phone}}</td>
             <td>
                 <table class="table">
-                    <tr ng-repeat="item in o.items"></tr>
-                    <td>{{item.product.title}}</td>
-                    <td>{{item.pricePerProduct}}</td>
-                    <td>{{item.quantity}}</td>
-                    <td>{{item.price}}</td>
+                    <thead>
+                    <tr>
+                        <td>Имя продукта</td>
+                        <td>Цена за один</td>
+                        <td>Количество</td>
+                        <td>Итоговая цена</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="oi in o.items">
+                    <td>{{oi.productTitle}}</td>
+                    <td>{{oi.pricePerProduct}}</td>
+                    <td>{{oi.quantity}}</td>
+                    <td>{{oi.price}}</td>
+                    </tr>
+                    </tbody>
                 </table>
             </td>
             <td>{{o.price}}</td>
