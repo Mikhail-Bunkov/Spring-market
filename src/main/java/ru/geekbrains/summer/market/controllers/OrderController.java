@@ -32,6 +32,6 @@ public class OrderController {
     @GetMapping
     public List<OrderDto> getAllOrders(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to create order. User not found"));
-        return orderService.findAllDtosByUser(user);
+        return orderService.findAllDtosByUsername(principal.getName());
     }
 }

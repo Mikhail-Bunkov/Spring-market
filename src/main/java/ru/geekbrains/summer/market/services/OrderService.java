@@ -47,12 +47,9 @@ public class OrderService {
         cart.clear();
     }
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    @Transactional
+    public List<OrderDto> findAllDtosByUsername(String username) {
+        return orderRepository.findAllByUsername(username).stream().map(OrderDto::new).collect(Collectors.toList());
     }
 
-    @Transactional
-    public List<OrderDto> findAllDtosByUser(User user) {
-        return orderRepository.findAllByUser(user).stream().map(OrderDto::new).collect(Collectors.toList());
-    }
 }
