@@ -5,17 +5,38 @@
         <thead>
         <tr>
             <td>ID</td>
-            <td>Цена</td>
             <td>Адрес доставки</td>
             <td>Телефон</td>
+            <td>Список товара</td>
+            <td>Цена</td>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="o in orders">
             <td>{{o.id}}</td>
-            <td>{{o.price}}</td>
             <td>{{o.address}}</td>
             <td>{{o.phone}}</td>
+            <td>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Имя продукта</td>
+                        <td>Цена за один</td>
+                        <td>Количество</td>
+                        <td>Итоговая цена</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="oi in o.items">
+                    <td>{{oi.productTitle}}</td>
+                    <td>{{oi.pricePerProduct}}</td>
+                    <td>{{oi.quantity}}</td>
+                    <td>{{oi.price}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>{{o.price}}</td>
         </tr>
         </tbody>
     </table>

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.summer.market.model.Product;
 import ru.geekbrains.summer.market.repositories.ProductRepository;
@@ -24,8 +25,8 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Page<Product> findPage(int pageIndex, int pageSize) {
-        return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
+    public Page<Product> findPage(int pageIndex, int pageSize, Specification<Product> spec) {
+        return productRepository.findAll(spec ,PageRequest.of(pageIndex, pageSize));
     }
 
     public Product save(Product newProduct) {
