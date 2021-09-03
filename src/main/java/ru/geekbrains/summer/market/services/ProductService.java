@@ -1,14 +1,15 @@
 package ru.geekbrains.summer.market.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.summer.market.model.Product;
 import ru.geekbrains.summer.market.repositories.ProductRepository;
+import ru.geekbrains.summer.market.repositories.specifications.ProductSpecifications;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,20 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Page<Product> findPage(int pageIndex, int pageSize, Specification<Product> spec) {
+    public Page<Product> findPage(int pageIndex, int pageSize, BigDecimal minPrice, BigDecimal maxPrice, String title) {
+
+        Specification<Product> spec = Specification.where(null);
+
+        if(title!=null&&!title.isBlank()){
+            spec=spec.and(ProductSpecifications.titleLike(title));
+        }
+
+        if(minPrice!=null){
+            spec = spec.and(ProductSpecifications.priceGreaterOrEqualsThan(minPrice));
+        }
+        if(maxPrice!=null){
+            spec = spec.and(ProductSpecifications.priceLesserOrEqualsThan(maxPrice));
+        }
         return productRepository.findAll(spec ,PageRequest.of(pageIndex, pageSize));
     }
 
